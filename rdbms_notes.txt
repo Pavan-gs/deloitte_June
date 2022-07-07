@@ -1,0 +1,123 @@
+Problems with traditional file approach
+-----------------------------------------------------
+
+Data isolation, Redudancy, security
+
+Db --> Collection of information in the organised manner --> Easy for retrieval
+
+DBMS --> Collection of files and programs to efficiently store & manage the data
+
+Users of DB
+----------------
+End user
+DB Designer
+DBA
+Application programmer
+
+Schema
+-----------
+Three Schema Architecture --> Database, Internal schema, Conceptual schema
+
+Db Model  --> Blueprint
+-------------
+
+Relational data model   --> RDBMS
+------------------------------
+
+Relations --> Two dimensional tables (Unique attributes[columns] & tuples[rows])
+
+NULL --> Unknown value
+
+Keys 
+------
+
+Primary keys  --> Cannot be NULL & should be unique 
+
+Composite primary keys --> Combination of more than one attribute
+
+Foreign keys[Referential Integrity] --> Set of attributes whose values are required to match the values of the column in another table
+
+FK of the parent table needs to be unique.
+FK of the child table need not be unique and can be NULL.
+
+Entity Relationship Models : Entity, Cardinality (Degree of relationship), Shapes 
+
+12. Shapes : 
+
+	Rectangle : Entity
+
+	Ellipses : Attributes
+
+	Diamonds : Relationship
+
+	Lines : Link b/w Attributes, Entities & Relationships
+
+                Double Ellipses : Multi Valued Attributes
+
+	Dashed Ellipses : Derived Attributes
+
+	Double Lines : Total Participation
+
+	Dashed Lines : WIthout Primary key
+
+	Solid Line : Stronger Entity
+
+	Double Rectangles : Weak Entity
+
+	 Single Line : Partial Participation
+
+Cardinality --> 1 to 1, 1 to M, M to 1, M to M
+
+# Make a ER diagram having tables as follows,
+
+1. Person : Driver_ID, Name, Address
+
+2. Car : License, Year, Model
+
+3. Accident : Report num, Date, Location
+
+4. Participated : Driver ID, License, Report num, Damage fine
+
+1 NF ---> Make sure all the variables are atomic
+
+2 NF --> Table shjould be in 1 NF & No partial dependency between non-key attributes [Non key attribute should not depend only on one composite key)
+
+
+DB OBJECTS   --> Tables, Indexes, Views, Synonyms, Sequence
+
+# Data Types:  Char, Varchar2, Number, Long, Datetime
+
+Char => Fixed length character data
+Varchar => Variable length character data  
+number => Variable length numeric data
+Date =>Date & time values
+Long => Variable length character data (2 GB)
+
+# Constraints : PK, FK, NULL, Default, Check, Unique
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
