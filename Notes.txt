@@ -367,10 +367,45 @@ location '/data'
 
 Partitioning
 ----------------
+create table employee(name string, salary float, dept string)
+partitioned by(state string)
+row format delimited
+fields terminated by ','
+
+load data local inpath 'emp1.txt' into table employees
+partition(state='MH')
+
+load data local inpath 'emp1.txt' into table employees
+partition(state='KA')
+
+load data local inpath 'emp1.txt' into table employees
+partition(state='AP')
+
+Partitioning for external tables
+-------------------------------------------
+create external table emp(name string, salary float, dept string)
+partitioned by(country string, state string)
+row format delimited
+fields terminated by ','
+
+alter table emp
+add partition(country = "India", state="KA")
+location '/part/India';
+
+alter table emp
+add partition(country = "USA", state="CA")
+location '/part/India';
+
+create table emp_kar as select name, salarym dept from employee where state='kar';
+alter table emp drop if exists partition(state='kar')
+
+alter table emp add if not exists
+partition(country="Aus", State="Mb")
+location '/data/aus'
 
 Static & Dynamic Partitioning
-
+---------------------------------------
 Bucketing
-
+-------------
 
 
