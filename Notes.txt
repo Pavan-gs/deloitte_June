@@ -1,0 +1,376 @@
+1990's --> www/dot com era, personal computers
+
+Era of Digitization
+
+Data Science Life cycle
+-------------------------------
+Data Engineering  -->  Collect, store & manage [RDBMS, Nosql db's, Hadoop, Cloud, Data Lakes, Data warehousing]
+
+Data Analysis --> Analyse data using maths, stats & domain knowledge [Python(Pandas), R, SAS, SQL, Pyspark]
+
+Data Visualisation --> Reports, charts, presentations [Excel, Tableau, Power BI, Qlikview, Lookr]
+
+Machine Learning  --> Building predictive models, clusters etc. on the data [Python, Spark ML, R, Mahout]
+
+GIT HUB
+------------
+
+Distributed Version Control System
+------------------------------------------------
+
+Collaboration & Version Controlling
+Opensource
+Secure cloud storage
+
+Git  vs Github --> Git is a desktop application, github is cloud hosted platform
+
+Fork a repository --> Copy somebody's repo under your name
+make changes
+pull request
+
+Review changes , comment & merge the request
+
+Git commands
+--------------------
+
+Fork --> Copy somebody's repo under your name
+Pull request
+Clone --> Download a repo to your local machine
+
+mkdir <folder>
+ls
+vi new file --> Insert for adding data, escape :wq for exiting vi editor
+git add new file
+git commit -m "message"
+git status
+
+git init --> The pwd is initialised as the git repository
+git remote add origin "https link of the remote repo"
+
+git pull origin master
+ls
+vi <file>
+git add file
+git commit  -m "saved"
+git status
+
+git push origin master --> This will create a pull request.
+
+git tag --> To show the tags
+
+upon committing a change we can specify, git tag <version>
+
+git show <version>
+
+Challenges with Big Data
+----------------------------------
+Volume --> Cost of storage, [Licensed s/w, High end servers], Portability, premature death of the death
+
+Velocity --> Speed of data generations
+
+Variety --> Unstructured data
+
+Big Data Ecosystem
+--------------------------
+Hadoop --> Opensource, cheap commodity hardwares
+
+HDFS [Hadoop Distributed FIle System] --> Storage Layer  --> Distributed Architecture
+
+Mapreduce 2 [YARN --> Yet Another Resource Negotiator] --> Processing Layer --> Parallel Processing
+
+Pig --> Adhoc query language (Pig latin), data flow language , Load, Transform(generate, filter, describe, avg) & dump/store (Invented by Yahoo!)
+
+Hive --> Data Warehousing like solution, HQL (FB)
+
+Squoop --> Connecting with other db's
+
+Flume --> Data integration from web
+
+Oozie --> Work Scheduler
+
+Zoo keeper --> Job Co-ordinator
+
+Mahout --> ML library (Java)
+
+HBASE --> No sql db (columnar)
+
+Hadoop Clusters  ---> Hadoop programs running in multiple machines/servers/nodes
+----------------------
+Each hadoop server is capable of managing 10 TB data for ex
+300*10 --> 3 PB --> 3000 TB
+
+Modes  of cluster configuration --> Standalone, Pseudo distributed[Configured to run on single server], Fully Distributed mode[Configured to run on multiple server]
+
+Characterstics
+-------------------
+Cost effective, Flexible, Scalable, Fault tolerant
+
+Hadoop Vendors --> Apache, Cloudera, Hortonworks, MapR, MS HD Insights, IBM Big Insights
+
+HDFS Architecture
+-------------------------
+
+Master --> Name node --> Maintains & manages the blocks which are present in the data nodes
+It keeps track of entire data/ directory structure and also the placement of the blocks
+
+Slave Machines --> Data nodes --> Data is stored & processed here. Responsible for serving the read/write requests
+
+File storage
+----------------
+Files are split into physical blocks of 128 mb and further replicated 3 times by default and stored in the data nodes
+
+Replication factor can be set by the Hadoop Admin
+
+Hadoop 1 --> 64 mb
+Hadoop 2 -->128 mb
+
+280 mb file
+
+The data is devided into blocks of 128 mb maximum and distributed across the data nodes in parallel.
+Replications are written in serial
+
+b1 --> 128 mb
+b2 --> 128 mb
+b3 --> 24 mb
+
+
+Name node
+----------------
+
+Stores the meta data  --> List of files, list of blocks & its replications for each file, list of data nodes for each blocks, file attributes, access_time, transaction_log etc.
+
+Rack Awareness --> Hadoop makes sure to store the replications in different data nodes/racks/servers.
+
+File Read/Write Anatomy
+----------------------------------
+
+When a read/write request is submitted --> Request is taken by the Client (Hadoop FS)
+Interface between Hadoop and the User
+hadoop fs  -put /source_path /destination_path
+
+1.  Client takes the request, splits the data into blocks of 128 mb  (maximum) and replications
+
+2. Client collects the list of data nodes details from the "Name node" to write the blocks and replications
+
+3. Blocks are written in parallel, replications are written in serial
+
+By default replication factor 3
+
+Limitations of Hadoop 1
+----------------------------------
+
+Secondary Name node --> Manual back up of the name node (Single point of failure)
+
+Single Name space --> Limited by the single ram space (Name node)
+
+Hadoop 2
+-------------
+
+High Availability --> Active & Standby name node (Auto back-up)
+
+Federation --> Multiple name nodes
+
+/HR --> Name node1
+/Sales --> Name node2
+/Marketing --> Name node3
+
+Commands
+---------------
+ls --> To list the files and directories
+mkdir --> To create directory
+cd --> To change the directory
+gedit / vi --> i (insert), right click for paste, (esc+:wq) for quit
+cat --> To view the file
+Hadoop commands
+---------------------------
+
+Sudop jps --> To check the currently running daemons
+
+HDFS  --> start-dfs.sh --> To start HDFS daemons
+Mapreduce  --> start-yarn.sh --> To start mapreduce daemons
+start-all.sh --> To start all the hadoop daemons
+stop-all.sh --> To stop all the hadoop daemons
+localhost/50070 --> To browse the hadoop file system
+
+hadoop fs  -ls /
+
+hadoop fs  -put /source_path /destination_path 
+hadoop fs  -get /source_path /destination_path
+
+Mapreduce / YARN [Yet Another Resource Negotiator]  --> Parallel processing framework
+-------------------------------------------------------------------------
+
+MR1 --> Job Tracker --> Master --> Burden (Managing cluster level resources, cpu/ram) scheduling of tasks, managing & monitoring every task
+
+Task Trackers --> Slaves --> Allocation of all the resources for all the tasks
+
+MR2
+------
+Resource manager (Master) --> Manages all the cluster level resources and scheduling of jobs
+
+Node manager (Slave) --> Manages allocation of the jobs, one present per data node
+
+Application master --> Present for each jobs, Negotiates with Resource Manager to schedule tasks
+
+MR program paradigm
+------------------------------
+
+240 mb file
+
+1b --> 128 mb
+2b --> 112 mb
+
+Split, distribute and manage  the data running in parallel with fault tolerance.
+
+Map class --> Implements the business logic --> Overrides the map method [select * from employees where sal>10k]
+
+Reduce class --> Aggregation logic --> Overrides the reducer method (count)
+
+Framework itself reads the data from the blocks and gives it to the mappers
+
+Input format class --> Responsible for reading the data from the blocks and giving it to the mappers & reducers
+
+Text input format class --> Text files
+Sequence file format --> Binary files
+XML input format class --> XML files
+
+/ * Word count program */
+
+1. Mapper Input 
+
+s = "Hi, we are in python class, python is awesome!"
+s.split(" ")
+for i in l:
+     print(i,1)
+
+hi,1
+we,1
+are,1
+python,1
+class,1
+python,1
+is,1
+awesome,1
+
+2. Combiner (Mini-reducer) --> (hi,1) (we,1) (are,1) (python,1,1) (class,1) (is,1) (awesome,1)
+
+3. Reducer Input --> Same as the mapper's output
+
+4. Reducer output --> Aggregation logic (take the sum of the values for each keys and pass it to the same reducer output)
+
+5  Partitioner --> Responsible for sending the output of the same key to the same output directory
+
+
+Map task --> Input splits --> Num_mappers
+
+Get data from input splits
+process
+produce the intermediate temporary output
+
+Reduce task --> (By default is 1)
+
+Reads from all the map tasks
+processs
+output is stored in the hdfs in blocks and replications
+
+Print the  names of employees getting more than 10k salary? --> No aggregation is required and hence no reducer is needed
+
+Count the number of employees getting > 10k sal? --> reducer is needed to count(aggregation)
+
+Hadoop Streaming
+--------------------------
+Utility that comes along with the hadoop distribution which helps in running executable scripts of Python or R
+
+/usr/local/hadoop-2.9.1/share/hadoop/tools/lib
+
+chmod a+x / chmod 777 (give permission to your mapper file)
+
+#! --> Shabong --> To run a executable python script
+#!/usr/bin/python
+
+ hadoop jar /usr/local/hadoop-2.9.1/share/hadoop/tools/lib/hadoop-streaming-2.9.1.jar  -input /Pavan/myfile.txt -output /Pavan/wordcount2 -mapper /home/hduser/Pavan/mapper1.py  -reducer /home/hduser/Pavan/reducer1.py
+
+1. Make sure the #! "Excutable script path is given"
+2. verify the python syntax
+3. Give permission to mapper & reducer file
+4. Ensure the path of the hadoop streaming jar, input & output files, mapper & reducer files.
+
+HIVE
+-------
+DWH --> OLAP
+DB --> OLTP
+ 
+Data warehousing like solution Hadoop invented FB
+
+Lot of data
+
+select * from data where people liked>100; 
+
+(100 lines of code --> java)
+
+(30 lines of code --> python)
+
+Lot of data
+Streaming data
+Variety of data
+
+With MR --> Hard to code
+Solution --> They had a lot of inhouse sql developers
+
+HQL--> Hive Query Language (Sql like)
+
+set hive.cli.print.header=true;
+set hive.cli.print.current.db=true
+show databases;
+create database deloitte;
+create database if not exists deloitte;
+use deloitte
+
+Internal / Managed tables  
+-----------------------------------
+Upon loading a file from HDFS , the file gets physically moved
+from HDFS into the Hive table.
+
+Disadvantages
+--------------------
+If you are deleting the table, file is permanently lost.
+Data is not available for other processes of Hadoop
+
+create table employee(name string, salary float, dept string)
+row format delimited
+fields terminated by ',';
+
+// If the second line is not given (newline is assumed to be row delimiter)
+//third line by default ascii is considered to be the column seperator
+
+describe formatted database deloitte;
+
+load data local inpath 'emp1.txt' into table employees;
+
+describe formatted employees;
+
+load data inpath 'emp2.txt' into table employees;  (The file from hdfs is moved into hive warehouse making it unavailable for other hadoop processes)
+
+drop table employees (Along with table, the emp2 data is also permanently lost)
+
+External tables
+--------------------
+
+Upon loading a file from external table, the file is not moved to the warehouse, it is available for the other processes.
+
+# Create emp2 & emp3 and move it into hdfs to  directory "data"
+
+create table employee(name string, salary float, dept string)
+row format delimited
+fields terminated by ','
+location '/data'
+
+Partitioning
+----------------
+
+Static & Dynamic Partitioning
+
+Bucketing
+
+
+
